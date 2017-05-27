@@ -5,11 +5,11 @@ int main()
 	bool check;
 	fileReader reader;
 
-	macierzSasiedztwa macierz(reader.data[0], reader.data[1], reader.tablica);
+	Matrix matrix(reader.data[0], reader.data[1], reader.tablica, 0);
 
-	macierz.showMatrix();
-	macierz.Dijkstra(reader.data[2]);
-	macierz.DijkstraShow(reader.data[2]);
+	matrix.showMatrix();
+	matrix.Dijkstra(reader.data[2]);
+	matrix.DijkstraShow(reader.data[2]);
 
 	system("Pause");
 	return 0;
