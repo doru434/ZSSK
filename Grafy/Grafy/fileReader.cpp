@@ -27,9 +27,9 @@ bool fileReader::file_read_line(ifstream &file, int tab[], int size)
 
 void fileReader::file_read_graph(string file_name)
 {
-	Krawedz a;
+	Edge a;
 	ifstream file;
-	int tab[4];
+	int tab[10];
 	file.open(file_name.c_str());
 
 	if (file.is_open())
@@ -39,11 +39,11 @@ void fileReader::file_read_graph(string file_name)
 			data[0] = tab[0];				//krawedzie
 			data[1] = tab[1];				//wierzcholki
 			data[2] = tab[2];				//wierzcholek poczatkowy
-			data[3] = tab[3];				//wierzcholek koncowy
+ 			data[3] = tab[3];				//wierzcholek koncowy
 			for (int i = 0; i <data[1]; i++)
-				if (file_read_line(file, tab, 3))
+				if (file_read_line(file, tab, 8))
 				{
-					tablica.push_back(a = { tab[0],tab[1],tab[2]});
+					tablica.push_back(a = { tab[0],tab[1],tab[2],tab[3],tab[4],tab[5],tab[6],tab[7] });
 				}
 				else
 				{

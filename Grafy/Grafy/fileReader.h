@@ -1,10 +1,10 @@
-#include "macierzSasiedztwa.h"
+#include "Matrix.h"
 
 class fileReader
 {
 public:
 	string fileName;
-	vector<Krawedz> tablica;
+	vector<Edge> tablica;
 	int data[4]; //ilosc wierzcholow, ilosc krawedzi, wierzcholek poczatkowy, wierzcholek koncowy
 public:
 	fileReader();
