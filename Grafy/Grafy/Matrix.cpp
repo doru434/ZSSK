@@ -21,13 +21,13 @@ Matrix::Matrix(int v, int e, vector<Edge> &data)
 	{
 		Edge temp;
 
-		temp.distance_bus= data.at(i).distance_bus;
-		temp.distance_taxi = data.at(i).distance_taxi;
 		temp.distance_train = data.at(i).distance_train;
+		temp.distance_bus = data.at(i).distance_bus;
+		temp.distance_taxi = data.at(i).distance_taxi;
 
-		temp.time_bus = data.at(i).time_bus;
-		temp.time_taxi= data.at(i).time_taxi;
 		temp.time_train = data.at(i).time_train;
+		temp.time_bus = data.at(i).time_bus;
+		temp.time_taxi = data.at(i).time_taxi;
 		
 		matrix.at(data.at(i).beginning).at(data.at(i).end) = temp;
 	}
@@ -42,7 +42,7 @@ void Matrix::showMatrix()
 		cout << "El[" << i << "] = ";
 		for (int j = 0; j < matrix.at(i).size(); j++)
 		{
-			cout << matrix.at(i).at(j).distance_bus  << "  " << matrix.at(i).at(j).distance_taxi << "  " << matrix.at(i).at(j).distance_train << " | " << matrix.at(i).at(j).time_bus << "  " << matrix.at(i).at(j).time_taxi << "  " << matrix.at(i).at(j).time_train << "    ";
+			cout << matrix.at(i).at(j).distance_train  << "  " << matrix.at(i).at(j).distance_bus << "  " << matrix.at(i).at(j).distance_taxi << " | " << matrix.at(i).at(j).time_train << "  " << matrix.at(i).at(j).time_bus << "  " << matrix.at(i).at(j).time_taxi << "    ";
 		}
 		cout << endl;
 	}

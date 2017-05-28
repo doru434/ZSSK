@@ -1,3 +1,8 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Grafy.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-  Grafy.vcxproj -> F:\Projects\ZSSK-feature-Edge_modify\Grafy\Debug\ZSSK.exe
+  Matrix.cpp
+f:\projects\zssk\grafy\grafy\matrix.cpp(40): warning C4018: '<': signed/unsigned mismatch
+f:\projects\zssk\grafy\grafy\matrix.cpp(43): warning C4018: '<': signed/unsigned mismatch
+  fileReader.cpp
+  Generating Code...
+  Grafy.vcxproj -> F:\Projects\ZSSK\Grafy\Debug\ZSSK.exe
