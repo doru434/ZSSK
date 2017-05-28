@@ -12,8 +12,8 @@ int main()
 	//cout << endl << "Wybierz kryterium \n1.Odleglosc \n2.Czas" << endl;
 	//cin >> n;
 
-	//matrix.Dijkstra(reader.data[2], 1,3);
-
+	matrix.DijkstraDistance(reader.data[2]);
+	matrix.DijkstraShowDistance(reader.data[2], reader.data[3]);
 
 	system("Pause");
 	return 0;

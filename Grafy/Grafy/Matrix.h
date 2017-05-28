@@ -27,10 +27,16 @@ private:
 
 	int vertices;
 	int edges;
-	int *d;              // Tablica kosztów dojœcia 
-	long long *d2;       // Tablica kosztów dojœcia ford
-	int *p;              // Tablica poprzedników
-	bool minus = false;
+
+	// Tablice kosztów dojœcia 
+	int *d_distance;              
+	int *d_time;             
+            
+	// Tablice poprzedników
+	int *p_distance;
+	int *p_time;
+
+	//bool minus = false;
 
 	vector< vector<Edge> > matrix;
 
@@ -40,8 +46,7 @@ public:
 
 	void showMatrix();
 
-	//void Dijkstra(int i);
-	//void Dijkstra(int beginning);
-	//void DijkstraShow(int beginning, int end);
+	void DijkstraDistance(int beginning);
+	void DijkstraShowDistance(int beginning, int end);
 
 };

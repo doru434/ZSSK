@@ -48,65 +48,185 @@ void Matrix::showMatrix()
 	}
 
 }
-/*
 
-void Matrix::Dijkstra(int beginning)
+
+void Matrix::DijkstraDistance(int beginning)
 {
-	d = new int[vertices];
-	p = new int[vertices];
-
 	// Tworzymy tablice dynamiczne
 
-	bool *S = new bool[vertices];           // Zbior S
+	d_distance = new int[vertices];
 
-											// Inicjujemy tablice dynamiczne
+	p_distance= new int[vertices];
+
+	// Zbior S
+	bool *S_distance = new bool[vertices];         
+			
+
+	// Inicjujemy tablice dynamiczne
 
 	for (int i = 0; i < vertices; i++)
 	{
-		d[i] = MAXINT;
-		p[i] = -1;
-		S[i] = false;
+		d_distance[i] = MAXINT;
+		p_distance[i] = -1;
+
+		S_distance[i] = false;
 	}
+	// Koszty dojœcia v sa zerowe
+						
+	d_distance[beginning] = 0;
 
-	d[beginning] = 0;							// Koszt dojœcia v jest zerowy
-	
-												// Wyznaczamy œcie¿ki
+	// Wyznaczamy œcie¿ki
 
 	for (int i = 0; i < vertices; i++)
 	{
-		Edge pw;
+		//Edge pw;
 		int j, u, x = 0;
 
 		// Szukamy wierzcho³ka w Q o najmniejszym koszcie d
 
-		for (j = 0; S[j]; j++);
+		for (j = 0; S_distance[j]; j++);
 		for (u = j++; j < vertices; j++)
-			if (!S[j] && (d[j] < d[u]))
+			if (!S_distance[j] && (d_distance[j] < d_distance[u]))
 				u = j;
 
 		// Znaleziony wierzcho³ek przenosimy do S
 
-		S[u] = true;
+		S_distance[u] = true;
 
 		// Modyfikujemy odpowiednio wszystkich s¹siadów u, którzy s¹ w Q
 
-		vector<int> temp = matrix.at(u);
+		vector<Edge> temp = matrix.at(u);
 
 		for (int index = 0; index < matrix.size(); index++)
 		{
-			if (temp.at(index) != 0)
+			if (temp.at(index).distance_bus != 0 && temp.at(index).distance_taxi != 0  && temp.at(index).distance_train != 0)
 			{
-				if (!S[index] && (d[index] > d[u] + temp.at(index)))
+				if (temp.at(index).distance_bus < temp.at(index).distance_taxi)
 				{
-					d[index] = d[u] + temp.at(index);
-					p[index] = u;
+					if (temp.at(index).distance_bus < temp.at(index).distance_train)
+					{
+						if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_bus))
+						{
+							d_distance[index] = d_distance[u] + temp.at(index).distance_bus;
+							p_distance[index] = u;
+						}
+					}
+					else
+					{
+						if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_train))
+						{
+							d_distance[index] = d_distance[u] + temp.at(index).distance_train;
+							p_distance[index] = u;
+						}
+					}
+				}
+				else
+				{
+					if (temp.at(index).distance_taxi < temp.at(index).distance_train)
+					{
+						if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_taxi))
+						{
+							d_distance[index] = d_distance[u] + temp.at(index).distance_taxi;
+							p_distance[index] = u;
+						}
+					}
+					else
+					{
+						if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_train))
+						{
+							d_distance[index] = d_distance[u] + temp.at(index).distance_train;
+							p_distance[index] = u;
+						}
+					}
+				}
+			}
+			else if (temp.at(index).distance_bus != 0 && temp.at(index).distance_taxi != 0 )
+			{
+				if (temp.at(index).distance_bus < temp.at(index).distance_taxi)
+				{
+					if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_bus))
+					{
+						d_distance[index] = d_distance[u] + temp.at(index).distance_bus;
+						p_distance[index] = u;
+					}
+				}
+				else
+				{
+					if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_taxi))
+					{
+						d_distance[index] = d_distance[u] + temp.at(index).distance_taxi;
+						p_distance[index] = u;
+					}
+				}
+			}
+			else if (temp.at(index).distance_bus != 0 && temp.at(index).distance_train != 0)
+			{
+				if (temp.at(index).distance_bus < temp.at(index).distance_train)
+				{
+					if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_bus))
+					{
+						d_distance[index] = d_distance[u] + temp.at(index).distance_bus;
+						p_distance[index] = u;
+					}
+				}
+				else
+				{
+					if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_train))
+					{
+						d_distance[index] = d_distance[u] + temp.at(index).distance_train;
+						p_distance[index] = u;
+					}
+				}
+			}
+			else if (temp.at(index).distance_taxi != 0 && temp.at(index).distance_train != 0)
+			{
+				if (temp.at(index).distance_taxi < temp.at(index).distance_train)
+				{
+					if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_taxi))
+					{
+						d_distance[index] = d_distance[u] + temp.at(index).distance_taxi;
+						p_distance[index] = u;
+					}
+				}
+				else
+				{
+					if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_train))
+					{
+						d_distance[index] = d_distance[u] + temp.at(index).distance_train;
+						p_distance[index] = u;
+					}
+				}
+			}
+			else if (temp.at(index).distance_taxi != 0)
+			{
+				if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_taxi))
+				{
+					d_distance[index] = d_distance[u] + temp.at(index).distance_taxi;
+					p_distance[index] = u;
+				}
+			}
+			else if (temp.at(index).distance_bus != 0)
+			{
+				if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_bus))
+				{
+					d_distance[index] = d_distance[u] + temp.at(index).distance_bus;
+					p_distance[index] = u;
+				}
+			}
+			else if (temp.at(index).distance_train != 0)
+			{
+				if (!S_distance[index] && (d_distance[index] > d_distance[u] + temp.at(index).distance_train))
+				{
+					d_distance[index] = d_distance[u] + temp.at(index).distance_train;
+					p_distance[index] = u;
 				}
 			}
 		}
 
 	}
 }
-void Matrix::DijkstraShow(int beginning, int end)
+
+void Matrix::DijkstraShowDistance(int beginning, int end)
 {
 	cout << endl << "Najkorzystniejsza trasa ze wzgledu na odleglosc";
 	int *Stos = new int[vertices];              // Stos
@@ -123,12 +243,12 @@ void Matrix::DijkstraShow(int beginning, int end)
 			// Œcie¿kê przechodzimy od koñca ku pocz¹tkowi,
 			// Zapisuj¹c na stosie kolejne wierzcho³ki
 
-			for (int j = i; j > -1; j = p[j])
+			for (int j = i; j > -1; j = p_distance[j])
 				Stos[sptr++] = j;
 
 			// Wypisujemy jej koszt
 
-			cout << d[i] << "  | ";
+			cout << d_distance[i] << "  | ";
 			// Wyœwietlamy œcie¿kê, pobieraj¹c wierzcho³ki ze stosu
 
 			while (sptr)
@@ -139,4 +259,4 @@ void Matrix::DijkstraShow(int beginning, int end)
 		}
 	}
 }
-*/
+
