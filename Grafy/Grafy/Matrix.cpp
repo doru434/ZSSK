@@ -225,7 +225,181 @@ void Matrix::DijkstraDistance(int beginning)
 
 	}
 }
+void Matrix::DijkstraTime(int beginning)
+{
+	// Tworzymy tablice dynamiczne
 
+	d_time = new int[vertices];
+
+	p_time = new int[vertices];
+
+	// Zbior S
+	bool *S_time = new bool[vertices];
+
+
+	// Inicjujemy tablice dynamiczne
+
+	for (int i = 0; i < vertices; i++)
+	{
+		d_time[i] = MAXINT;
+		p_time[i] = -1;
+
+		S_time[i] = false;
+	}
+	// Koszty dojœcia v sa zerowe
+
+	d_time[beginning] = 0;
+
+	// Wyznaczamy œcie¿ki
+
+	for (int i = 0; i < vertices; i++)
+	{
+		//Edge pw;
+		int j, u, x = 0;
+
+		// Szukamy wierzcho³ka w Q o najmniejszym koszcie d
+
+		for (j = 0; S_time[j]; j++);
+		for (u = j++; j < vertices; j++)
+			if (!S_time[j] && (d_time[j] < d_time[u]))
+				u = j;
+
+		// Znaleziony wierzcho³ek przenosimy do S
+
+		S_time[u] = true;
+
+		// Modyfikujemy odpowiednio wszystkich s¹siadów u, którzy s¹ w Q
+
+		vector<Edge> temp = matrix.at(u);
+
+		for (int index = 0; index < matrix.size(); index++)
+		{
+			if (temp.at(index).time_bus != 0 && temp.at(index).time_taxi != 0 && temp.at(index).time_train != 0)
+			{
+				if (temp.at(index).time_bus < temp.at(index).time_taxi)
+				{
+					if (temp.at(index).time_bus < temp.at(index).time_train)
+					{
+						if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_bus))
+						{
+							d_time[index] = d_time[u] + temp.at(index).time_bus;
+							p_time[index] = u;
+						}
+					}
+					else
+					{
+						if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_train))
+						{
+							d_time[index] = d_time[u] + temp.at(index).time_train;
+							p_time[index] = u;
+						}
+					}
+				}
+				else
+				{
+					if (temp.at(index).time_taxi < temp.at(index).time_train)
+					{
+						if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_taxi))
+						{
+							d_time[index] = d_time[u] + temp.at(index).time_taxi;
+							p_time[index] = u;
+						}
+					}
+					else
+					{
+						if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_train))
+						{
+							d_time[index] = d_time[u] + temp.at(index).time_train;
+							p_time[index] = u;
+						}
+					}
+				}
+			}
+			else if (temp.at(index).time_bus != 0 && temp.at(index).time_taxi != 0)
+			{
+				if (temp.at(index).time_bus < temp.at(index).time_taxi)
+				{
+					if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_bus))
+					{
+						d_time[index] = d_time[u] + temp.at(index).time_bus;
+						p_time[index] = u;
+					}
+				}
+				else
+				{
+					if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_taxi))
+					{
+						d_time[index] = d_time[u] + temp.at(index).time_taxi;
+						p_time[index] = u;
+					}
+				}
+			}
+			else if (temp.at(index).time_bus != 0 && temp.at(index).time_train != 0)
+			{
+				if (temp.at(index).time_bus < temp.at(index).time_train)
+				{
+					if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_bus))
+					{
+						d_time[index] = d_time[u] + temp.at(index).time_bus;
+						p_time[index] = u;
+					}
+				}
+				else
+				{
+					if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_train))
+					{
+						d_time[index] = d_time[u] + temp.at(index).time_train;
+						p_time[index] = u;
+					}
+				}
+			}
+			else if (temp.at(index).time_taxi != 0 && temp.at(index).time_train != 0)
+			{
+				if (temp.at(index).time_taxi < temp.at(index).time_train)
+				{
+					if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_taxi))
+					{
+						d_time[index] = d_time[u] + temp.at(index).time_taxi;
+						p_time[index] = u;
+					}
+				}
+				else
+				{
+					if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_train))
+					{
+						d_time[index] = d_time[u] + temp.at(index).time_train;
+						p_time[index] = u;
+					}
+				}
+			}
+			else if (temp.at(index).time_taxi != 0)
+			{
+				if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_taxi))
+				{
+					d_time[index] = d_time[u] + temp.at(index).time_taxi;
+					p_time[index] = u;
+				}
+			}
+			else if (temp.at(index).time_bus != 0)
+			{
+				if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_bus))
+				{
+					d_time[index] = d_time[u] + temp.at(index).time_bus;
+					p_time[index] = u;
+				}
+			}
+			else if (temp.at(index).time_train != 0)
+			{
+				if (!S_time[index] && (d_time[index] > d_time[u] + temp.at(index).time_train))
+				{
+					d_time[index] = d_time[u] + temp.at(index).time_train;
+					p_time[index] = u;
+				}
+			}
+		}
+
+	}
+}
 void Matrix::DijkstraShowDistance(int beginning, int end)
 {
 	cout << endl << "Najkorzystniejsza trasa ze wzgledu na odleglosc";
@@ -249,6 +423,39 @@ void Matrix::DijkstraShowDistance(int beginning, int end)
 			// Wypisujemy jej koszt
 
 			cout << d_distance[i] << "  | ";
+			// Wyœwietlamy œcie¿kê, pobieraj¹c wierzcho³ki ze stosu
+
+			while (sptr)
+				cout << Stos[--sptr] << " ";
+
+			cout << endl;
+			break;
+		}
+	}
+}
+void Matrix::DijkstraShowTime(int beginning, int end)
+{
+	cout << endl << "Najkorzystniejsza trasa ze wzgledu na czas";
+	int *Stos = new int[vertices];              // Stos
+	int sptr = 0;							    // WskaŸnik stosu
+
+	cout << endl << "Start: " << beginning << " Punkt Docelowy: " << end << endl;
+	cout << endl << "DIST " << "Path  " << endl;
+	//wyniki
+	for (int i = 0; i < vertices; i++)
+	{
+
+		if (i == end)
+		{
+			// Œcie¿kê przechodzimy od koñca ku pocz¹tkowi,
+			// Zapisuj¹c na stosie kolejne wierzcho³ki
+
+			for (int j = i; j > -1; j = p_time[j])
+				Stos[sptr++] = j;
+
+			// Wypisujemy jej koszt
+
+			cout << d_time[i] << "  | ";
 			// Wyœwietlamy œcie¿kê, pobieraj¹c wierzcho³ki ze stosu
 
 			while (sptr)

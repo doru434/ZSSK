@@ -47,6 +47,8 @@ public:
 	void showMatrix();
 
 	void DijkstraDistance(int beginning);
+	void DijkstraTime(int beginning);
 	void DijkstraShowDistance(int beginning, int end);
+	void DijkstraShowTime(int beginning, int end);
 
 };
